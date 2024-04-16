@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:45 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 19:05:34 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:12:23 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	handle_heredocs(t_heredoc_list *heredocs, t_ast_node *ast)
 	int	heredoc_result;
 
 	signal_ignore_sigint();
+	signal_ignore_sigquit();
 	heredoc_result = heredoc_list_read(heredocs);
 	heredoc_list_destroy(heredocs);
 	if (heredoc_result != 0)

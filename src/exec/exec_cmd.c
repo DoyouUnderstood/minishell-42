@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:24 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:41:44 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:28:41 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,11 @@ void	exec_cmd(t_ast_node *cmd_node)
 	char	*exec_path;
 
 	signal_default_sigint();
+	signal_default_sigquit();
 	apply_redirections(cmd_node->redirections);
 	envp = env_to_arr();
+	if (!cmd_node->cmd_argv)
+		exit(0);
 	argv = word_list_to_arr(cmd_node->cmd_argv);
 	if (!argv[0])
 		exit (0);
@@ -117,9 +120,7 @@ int	exec_simple_cmd(t_ast_node *cmd_node)
 		ft_error_print_system(prog_name(NULL), NULL);
 		return (1);
 	}
-	if (cmd_node->cmd_argv == NULL)
-		return (0);
-	if (is_builtin(cmd_node->cmd_argv->word))
+	if (cmd_node->cmd_argv && is_builtin(cmd_node->cmd_argv->word))
 		return (exec_builtin(cmd_node));
 	pids = NULL;
 	pid = fork();

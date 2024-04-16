@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:44:22 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:44:45 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:36:30 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int	expand_cmd_argv(t_ast_node *cmd_node, char *dir_path,
 	t_error		*error;
 	t_word_list	*expanded_argv;
 
+	if (!cmd_node->cmd_argv)
+		return (0);
 	error = ft_error_create();
 	expanded_argv = expand_list(cmd_node->cmd_argv, dir_path, env, error);
 	if (ft_has_error(error))

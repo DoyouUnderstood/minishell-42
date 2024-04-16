@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 18:08:50 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 18:08:54 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:22:06 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	handle_single_quote(t_scanner *scanner, t_error *error)
 
 	scanner_advance(scanner);
 	scanner_advance_until(scanner, "'");
-	if (!scanner_match(scanner, "\""))
+	if (!scanner_match(scanner, "\'"))
 	{
 		error_msg = ft_strdup("syntax error: missing closing single quote.");
 		if (!error_msg)

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 17:10:23 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 17:39:50 by alletond         ###   ########.fr       */
+/*   Created: 2024/04/16 14:10:34 by alletond          #+#    #+#             */
+/*   Updated: 2024/04/16 14:36:05 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,12 @@
 
 #include "libft.h"
 
-void	signal_ignore_sigint(void)
+void	signal_ignore_sigquit(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	replay_sigint_handler(int sig)
+void	signal_default_sigquit(void)
 {
-	ft_printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	(void)sig;
-}
-
-void	signal_sigint_replay(void)
-{
-	signal(SIGINT, replay_sigint_handler);
-}
-
-void	signal_default_sigint(void)
-{
-	signal(SIGINT, SIG_DFL);
-}
-
-void	disable_raw_mode(void)
-{
-	struct termios	tp;
-
-	tcgetattr(STDIN_FILENO, &tp);
-	tp.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &tp);
+	signal(SIGQUIT, SIG_DFL);
 }

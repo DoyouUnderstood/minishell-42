@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:51:09 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 18:02:47 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:22:01 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,6 @@ t_ast_node	*parse_cmd(t_tl_scanner *scanner, t_error *error)
 	argv = tl_scanner_extract_words(scanner, error);
 	if (ft_has_error(error))
 		return (NULL);
-	if (!argv)
-	{
-		set_token_error(error, tl_scanner_peek(scanner)->value);
-		return (NULL);
-	}
 	cmd_node = ast_create_cmd(NULL, argv);
 	if (!cmd_node)
 	{

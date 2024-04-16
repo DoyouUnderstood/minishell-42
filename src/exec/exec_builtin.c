@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:18 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:40:19 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:58:54 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "exec_internal.h"
 
 #include <stdbool.h>
+#include <unistd.h>
 
 #include "ast.h"
 #include "env.h"
@@ -82,10 +83,8 @@ static int	apply_redirections(t_redir_list *redirections)
 	return (0);
 }
 
-int	exec_builtin(t_ast_node *cmd_node)
+int	exec_builtin2(t_ast_node *cmd_node)
 {
-	if (apply_redirections(cmd_node->redirections) != 0)
-		return (1);
 	if (ft_strcmp("cd", cmd_node->cmd_argv->word) == 0)
 		return (exec_builtin_cd(cmd_node));
 	else if (ft_strcmp("pwd", cmd_node->cmd_argv->word) == 0)
@@ -101,4 +100,21 @@ int	exec_builtin(t_ast_node *cmd_node)
 	else if (ft_strcmp("exit", cmd_node->cmd_argv->word) == 0)
 		return (exec_builtin_exit(cmd_node));
 	return (0);
+}
+
+int	exec_builtin(t_ast_node *cmd_node)
+{
+	int	exit_status;
+	int	original_fd[2];
+
+	original_fd[0] = dup(STDIN_FILENO);
+	original_fd[1] = dup(STDOUT_FILENO);
+	if (apply_redirections(cmd_node->redirections) != 0)
+		return (1);
+	exit_status = exec_builtin2(cmd_node);
+	dup2(original_fd[0], STDIN_FILENO);
+	dup2(original_fd[1], STDOUT_FILENO);
+	close(original_fd[0]);
+	close(original_fd[1]);
+	return (exit_status);
 }

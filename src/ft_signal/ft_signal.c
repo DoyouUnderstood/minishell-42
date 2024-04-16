@@ -5,84 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 11:08:10 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 17:15:56 by alletond         ###   ########.fr       */
+/*   Created: 2024/03/26 17:10:23 by alletond          #+#    #+#             */
+/*   Updated: 2024/04/16 14:09:42 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "ft_signal.h"
-#include <signal.h>
-#include <stdio.h>
-#include <termios.h>
+#include "ft_signal.h"
 #include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <string.h>
+#include <signal.h>
+#include <termios.h>
 
-// struct termios orig_termios;
-// volatile sig_atomic_t heredoc_interrupted = 0;
+#include "libft.h"
 
-// void sigintHeredocHandler(int signum) {
+void	signal_ignore_sigint(void)
+{
+	signal(SIGINT, SIG_IGN);
+}
 
-//     heredoc_interrupted = 1;
-//     (void)signum;
-// }
+void	replay_sigint_handler(int sig)
+{
+	ft_printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	(void)sig;
+}
 
-// void disable_raw_mode() {
-//     tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios);
-// }
+void	signal_sigint_replay(void)
+{
+	signal(SIGINT, replay_sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
 
-// void enable_raw_mode() {
-//     tcgetattr(STDIN_FILENO, &orig_termios);
-//     atexit(disable_raw_mode);
-//     struct termios raw = orig_termios;
-//     raw.c_lflag &= ~(ECHOCTL);
-//     tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
-// }
+void	signal_default_sigint(void)
+{
+	signal(SIGINT, SIG_DFL);
+}
 
-// // Cette fonction gère les interruptions du user (Ctrl+C) dans le shell.
-// void sigintHandler(int sig) {
-//     printf("\n");
-//     rl_on_new_line();
-//     rl_replace_line("", 0);
-//     rl_redisplay();
-//     (void)sig;
-// }
+void	disable_raw_mode(void)
+{
+	struct termios	tp;
 
-// // Configuration des signaux pour le shell.
-// void setupSignals() 
-// {
-//     struct sigaction sa;
-//     sa.sa_handler = sigintHandler;
-//     sigemptyset(&sa.sa_mask);
-//     sa.sa_flags = SA_RESTART;
-//     sigaction(SIGINT, &sa, NULL);
-// }
-
-// void resetSignalsForExec() {
-//     signal(SIGINT, SIG_DFL);
-// }
-
-// // Cette fonction gère les interruptions pendant la lecture d'un heredoc.
-// void sigintHandlerHeredoc(int sig) {
-//     heredoc_interrupted = 1;
-//     printf("Heredoc interrupted.\n");
-//     rl_replace_line("", 0);
-//     rl_redisplay();
-//     (void)sig;
-// }
-
-// void restoreDefaultSignals() {
-//     struct sigaction sa;
-
-//     sa.sa_handler = SIG_DFL;
-//     sigemptyset(&sa.sa_mask);
-//     sa.sa_flags = 0;
-
-//     sigaction(SIGINT, &sa, NULL);
-// }
-
-// // Configuration des signaux spécifiques pour les heredocs.
-// void setupHeredocSignals() {
-//     signal(SIGINT, sigintHandler);
-// }
+	tcgetattr(STDIN_FILENO, &tp);
+	tp.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &tp);
+}

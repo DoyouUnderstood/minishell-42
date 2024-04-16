@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:39:38 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:39:39 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:44:57 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "ast.h"
 #include "global.h"
+#include "libft.h"
 
 int	exec_ast(t_ast_node *ast)
 {
