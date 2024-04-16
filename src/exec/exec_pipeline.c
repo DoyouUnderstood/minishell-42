@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:44 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 17:00:34 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:25:39 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	exec_last_pipe_cmd(t_ast_node *cmd_node, t_pid_list **pids,
 		}
 		exec_cmd(cmd_node);
 	}
+	if (in_fd >= 0)
+		close(in_fd);
 	pid_list_add(pids, pid);
 	return (-1);
 }

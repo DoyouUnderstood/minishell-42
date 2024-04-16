@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:13 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:40:14 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:22:49 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ bool	is_valid_var_name(char *s)
 				"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 				"0123456789", *s))
 			return (false);
+		s++;
 	}
 	return (true);
 }

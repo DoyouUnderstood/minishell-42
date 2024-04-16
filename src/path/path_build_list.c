@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:50:10 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 17:52:40 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:33:10 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_word_list	*handle_slash_filename(char *filename, t_error *error)
 */
 t_word_list	*path_build_list(char *env_path, char *filename, t_error *error)
 {
-	if (!env_path || !*env_path)
-		return (NULL);
 	if (ft_strchr(filename, '/'))
 		return (handle_slash_filename(filename, error));
+	if (!env_path || !*env_path)
+		return (NULL);
 	return (path_build_list_no_slash(env_path, filename, error));
 }

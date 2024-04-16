@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:10:23 by alletond          #+#    #+#             */
-/*   Updated: 2024/04/16 14:09:42 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:45:15 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <termios.h>
 
 #include "libft.h"
+#include "global.h"
 
 void	signal_ignore_sigint(void)
 {
@@ -28,25 +29,16 @@ void	replay_sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	last_exit_status(1);
 	(void)sig;
 }
 
 void	signal_sigint_replay(void)
 {
 	signal(SIGINT, replay_sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 void	signal_default_sigint(void)
 {
 	signal(SIGINT, SIG_DFL);
-}
-
-void	disable_raw_mode(void)
-{
-	struct termios	tp;
-
-	tcgetattr(STDIN_FILENO, &tp);
-	tp.c_lflag |= ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &tp);
 }

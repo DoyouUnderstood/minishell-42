@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:59 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 16:43:53 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:10:22 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	pid_list_wait(t_pid_list *list)
 				exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
 			{
-				exit_status = WTERMSIG(status);
+				exit_status = WTERMSIG(status) + 128;
 				if (exit_status == SIGINT)
 					ft_printf("\n");
 			}

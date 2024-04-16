@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:03 by alletond          #+#    #+#             */
-/*   Updated: 2024/04/16 13:39:35 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:36:27 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	exec_builtin_echo(t_ast_node *cmd_node)
 		ft_printf("\n");
 		return (0);
 	}
-	if (ft_strcmp(argv->word, "-n") == 0)
+	while (argv && ft_strncmp(argv->word, "-n", 2) == 0)
 	{
 		argv = argv->next;
 		add_newline = false;

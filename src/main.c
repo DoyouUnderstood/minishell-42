@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:45 by alletond          #+#    #+#             */
-/*   Updated: 2024/04/16 14:12:23 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:43:51 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*handle_readline(void)
 
 	line = readline("minishell> ");
 	if (!line)
-		exit(0);
+		exit(last_exit_status(-1));
 	if (*line)
 		add_history(line);
 	return (line);
@@ -108,6 +108,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		signal_sigint_replay();
+		signal_ignore_sigquit();
 		line = handle_readline();
 		heredocs = NULL;
 		ast = build_ast(line, &heredocs);

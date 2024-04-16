@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enable_mode_raw.c                                  :+:      :+:    :+:   */
+/*   raw_mode.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:16:37 by alletond          #+#    #+#             */
-/*   Updated: 2024/03/26 17:39:29 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:47:33 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,14 @@ void	enable_raw_mode(void)
 
 	tcgetattr(STDIN_FILENO, &tp);
 	tp.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &tp);
+}
+
+void	disable_raw_mode(void)
+{
+	struct termios	tp;
+
+	tcgetattr(STDIN_FILENO, &tp);
+	tp.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &tp);
 }
