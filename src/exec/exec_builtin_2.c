@@ -6,7 +6,7 @@
 /*   By: alletond <alletond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:40:03 by alletond          #+#    #+#             */
-/*   Updated: 2024/04/16 17:36:27 by alletond         ###   ########.fr       */
+/*   Updated: 2024/04/16 19:23:04 by alletond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	exec_builtin_exit(t_ast_node *cmd_node)
 		exit(last_exit_status(-1));
 	if (!is_number(argv->word))
 	{
-		ft_error_print_custom(prog_name(NULL), "exit", "num argument required");
+		ft_error_print_custom(prog_name(NULL), "exit", "numeric argument required");
 		exit(2);
 	}
 	exit (ft_atoi(argv->word));
